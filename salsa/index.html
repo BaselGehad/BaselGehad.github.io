@@ -140,7 +140,7 @@ function show(v){['home','rest','orders'].forEach(function(x){$('v-'+x).classLis
 function head(t,p,back){$('hd').innerHTML=(back?'<span class="back" id="bk">‹ '+esc(back)+'</span><br>':'')+'<h1>'+esc(t)+'</h1>'+(p?'<p>'+esc(p)+'</p>':'');if(back)$('bk').onclick=function(){go(back=='المطاعم'?'home':'orders')}}
 function go(v,rid){
  if(v=='home'){show('home');head('المطاعم','اختر مطعمًا أو ابحث عن صنف');drawList();window.scrollTo(0,0);if(location.hash)history.replaceState(null,'',location.pathname)}
- else if(v=='orders'){ident();show('orders');head('طلباتي',($('nm').value.trim()||'')+(phone()?' · '+phone():''),'المطاعم');loadOrders(true);window.scrollTo(0,0)}
+ else if(v=='orders'){tab=1;ident();show('orders');head('طلباتي',($('nm').value.trim()||'')+(phone()?' · '+phone():''),'المطاعم');loadOrders(true);window.scrollTo(0,0)}
  else if(v=='rest'){openRest(rid)}
 }
 /* ---------- home list + search ---------- */
