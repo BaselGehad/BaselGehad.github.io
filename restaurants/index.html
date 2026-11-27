@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#5b3a29">
+<title>المطاعم</title>
+<style>
+:root{--bg:#f6efe2;--bg2:#eadfc8;--card:#fffaf0;--line:#e3d6bd;--ink:#5b3a29;--muted:#8a7766;--g:#5f7a55;--gl:#8aa17f;--gt:#4d6844;--bar:#5b3a29;--err:#b3261e;--chip:#f1e8d4;--warm:#f4e3c8;--warmt:#9a6a2c;--ok:#e8efe2}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 'Noto Naskh Arabic','Noto Sans Arabic',system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;padding-bottom:100px}
+header{background:var(--bar);color:#fffaf0;padding:16px 16px 14px}
+header h1{margin:0;font-size:22px}
+header p{margin:2px 0 0;color:#e6d6c3;font-size:14px}
+header .back{display:inline-block;color:#e6d6c3;font-size:14px;margin-bottom:4px;cursor:pointer}
+main{max-width:640px;margin:0 auto;padding:12px 12px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.card h2{margin:0 0 8px;font-size:16px}
+label{display:block;font-size:14px;color:var(--muted);margin:8px 0 4px}
+input[type=text],input[type=tel],input[type=search],textarea{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink)}
+textarea{resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--gl);border-color:var(--gl)}
+.note{font-size:13px;color:var(--muted);margin-top:8px}
+.warn{margin:10px 0;font-size:14px;background:var(--warm);border-radius:12px;padding:10px 12px;color:var(--warmt)}
+.status{margin-top:10px;padding:9px 12px;border-radius:12px;background:var(--ok);color:var(--gt);font-size:14px;display:none}
+.status.show{display:block}.status.err{background:#f8e1de;color:var(--err)}
+.rc{display:flex;gap:12px;align-items:center;cursor:pointer}
+.ic{width:46px;height:46px;border-radius:12px;background:var(--gl);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.ic.b{background:#b08968}
+.rc h3{margin:0;font-size:17px}.rc p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.tag{margin-inline-start:auto;font-size:12px;background:var(--ok);color:var(--gt);border-radius:20px;padding:3px 10px;white-space:nowrap}
+.tag:empty{display:none}
+.tag.o{background:var(--warm);color:var(--warmt)}.tag.x{background:#eee;color:#777}
+.rc.soon{opacity:.75;cursor:default}
+h4{margin:16px 4px 6px;font-size:15px;color:var(--gt)}
+.hit{margin:8px 4px;font-size:13px;color:var(--muted)}
+mark{background:var(--ok);color:inherit;border-radius:4px}
+.hi{display:flex;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.hi:last-child{border:0}
+.tabs{display:flex;margin:10px 0;background:var(--bg2);border-radius:14px;padding:4px}
+.tabs div{flex:1;text-align:center;padding:9px 4px;border-radius:11px;font-size:15px;cursor:pointer}
+.tabs .on{background:var(--bar);color:#fffaf0}
+.cat{margin:10px 0;border:1px solid var(--line);border-radius:16px;background:var(--card);overflow:hidden}
+.cat>summary{list-style:none;cursor:pointer;padding:14px;font-weight:700;display:flex;justify-content:space-between;align-items:center;background:var(--bg2)}
+.cat>summary::-webkit-details-marker{display:none}
+.cat>summary .cnt{font-size:12px;font-weight:700;background:var(--g);color:#fff;border-radius:99px;padding:1px 9px;margin-inline-start:8px;display:none}
+.cat>summary .cnt.on{display:inline-block}
+.cat>summary:after{content:"+";font-size:20px;color:var(--gt)}
+.cat[open]>summary:after{content:"−"}
+.cnote{padding:8px 14px 0;font-size:13px;color:var(--muted)}
+.it{padding:12px 14px;border-top:1px solid var(--line)}
+.it:first-of-type{border-top:0}
+.nm{font-weight:600}
+.new{display:inline-block;background:var(--err);color:#fff;font-size:11px;border-radius:6px;padding:0 6px;margin-inline-start:6px;vertical-align:middle}
+.ds{font-size:12.5px;color:var(--muted);margin-top:2px}
+.vs{display:flex;flex-wrap:wrap;gap:8px;margin-top:9px}
+.v{display:flex;align-items:center;gap:6px;border:1.5px solid var(--line);background:var(--chip);border-radius:12px;padding:6px 10px;font:inherit;color:var(--ink);cursor:pointer;min-height:40px}
+.v b{font-weight:700}
+.v.on{border-color:var(--gl);background:var(--ok)}
+.v.off{opacity:.4;cursor:default}
+.q{display:none;align-items:center;gap:2px}
+.v.on .q{display:inline-flex}
+.q span{display:inline-flex;width:28px;height:28px;align-items:center;justify-content:center;border-radius:8px;background:var(--g);color:#fff;font-weight:700}
+.q em{font-style:normal;min-width:20px;text-align:center;font-weight:700}
+.bar{position:fixed;inset-inline:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px 12px calc(10px + env(safe-area-inset-bottom));display:flex;gap:12px;align-items:center;justify-content:space-between;z-index:5}
+.bar .t{line-height:1.25}.bar .t small{color:var(--muted);display:block;font-size:12px}.bar .t b{font-size:19px}
+button.main{background:var(--g);color:#fff;border:0;border-radius:12px;font:inherit;font-weight:700;padding:11px 18px;cursor:pointer;min-height:44px}
+button.main:disabled{opacity:.5}
+button.sec{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;font:inherit;padding:10px 16px;cursor:pointer;min-height:44px}
+button.dng{background:var(--card);color:var(--err);border:1px solid var(--line);border-radius:12px;font:inherit;padding:10px 16px;cursor:pointer;min-height:44px}
+.btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.btns button{flex:1}
+.ord .t{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.ord .d{font-size:12px;color:var(--muted);margin-top:2px}
+.ln{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.tot{display:flex;justify-content:space-between;font-weight:800;padding:8px 0 0}
+.empty{color:var(--muted);text-align:center;padding:18px}
+.modal{position:fixed;inset:0;background:rgba(40,28,25,.55);display:none;align-items:flex-end;justify-content:center;z-index:10}
+.modal.show{display:flex}
+.sheet{background:var(--card);width:100%;max-width:640px;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom))}
+.sheet h3{margin:0 0 6px}
+.hide{display:none!important}
+@media (prefers-color-scheme:dark){
+:root{--bg:#2b211c;--bg2:#3a2d26;--card:#362a24;--line:#58463c;--ink:#f6efe2;--muted:#c9b9a6;--chip:#45362e;--gt:#a9c49d;--ok:#3d4a37;--warm:#55412a;--warmt:#f0cf9c;--err:#ef8a80}
+header,.bar{background:#241b17}.bar{background:#241b17}.status.err{background:#512a27}
+input[type=text],input[type=tel],input[type=search],textarea{background:#2b211c}
+}
+</style>
+</head>
+<body>
+<header id="hd"></header>
+<main>
+<div id="v-home">
+ <div class="card"><h2>بياناتك</h2>
+  <label for="nm">الاسم</label><input id="nm" type="text" autocomplete="name">
+  <label for="ph">رقم الموبايل</label><input id="ph" type="tel" inputmode="tel" autocomplete="tel">
+  <div class="note">رقمك هو ما يربط طلباتك بك. اكتبه نفسه في كل مرة.</div>
+ </div>
+ <div class="card" style="padding:10px"><input id="rq" type="search" placeholder="ابحث باسم المطعم أو الصنف"></div>
+ <div id="rl"></div>
+ <div class="card rc" id="myo" onclick="go('orders')"><div class="ic b">ط</div><div><h3>طلباتي</h3><p id="myop">طلبك الجديد وطلباتك القديمة</p></div><span class="tag" id="myot"></span></div>
+</div>
+<div id="v-rest" class="hide">
+ <div class="card hide" id="editb"></div>
+ <div class="card" style="padding:10px"><input id="q" type="search" placeholder="بحث في القائمة"></div>
+ <div id="menu"></div>
+ <div class="card"><h2>Open Space</h2><textarea id="os" rows="3" maxlength="500" placeholder="اكتب هنا ما تريد"></textarea></div>
+ <div class="status" id="st"></div>
+</div>
+<div id="v-orders" class="hide">
+ <div class="tabs"><div id="tb1" class="on">طلب جديد</div><div id="tb2">طلباتك القديمة</div></div>
+ <div class="status" id="ost"></div>
+ <div id="ol"></div>
+</div>
+</main>
+<div class="bar hide" id="bar"><div class="t"><small id="cnt">لم تختر شيئًا</small><b id="tot">0 جنيه</b></div><button class="main" id="gob" disabled>أرسل الطلب</button></div>
+<div class="modal" id="md"><div class="sheet" id="sh"></div></div>
+<script>
+var API="https://script.google.com/macros/s/AKfycbxQXzdC2EdXmxyZ5gs0qmp4kL2D2giydpCp4rW0WRpSSJeZVR-ka-Q2ujHkqxqCPKlVlA/exec";
+var OPEN="";
+var RESTS=[{"id":"salsa","name":"سالسا","sub":"سندوتشات · برجر · كريب · مشروبات","count":132,"menu":[{"t":"سندوتشات اللحوم","s":[""],"n":"الحجم: كبير","i":[{"n":"ليزي هوت دوج","d":null,"new":false,"p":[71],"id":"0.0"},{"n":"مكسيكانو هوت دوج","d":null,"new":false,"p":[71],"id":"0.1"},{"n":"كفتة جريل","d":null,"new":false,"p":[78],"id":"0.2"}]},{"t":"برجر","s":[""],"n":null,"i":[{"n":"بيج هوم برجر","d":"قطعة لحم صافي 150 جم مع الخس ومايونيز مع طبقة من الشيدر","new":false,"p":[89],"id":"1.0"},{"n":"بيج هوم إكسترا تشيز","d":"قطعة لحم صافي 150 جم محشي موتزاريلا مغطى بطبقة من الشيدر","new":false,"p":[99],"id":"1.1"},{"n":"هالبينو سموكي برجر","d":null,"new":false,"p":[94],"id":"1.2"},{"n":"مشروم برجر","d":"برجر لحم صافي + مشروم وبصل مع صوص الباربكيو وصوص الشيدر","new":false,"p":[94],"id":"1.3"},{"n":"أوريجينال سماشد برجر","d":"قطعة لحم بقري سماشد مع جبنة سايحة بصل مكرمل وصوص برجر","new":false,"p":[103],"id":"1.4"},{"n":"بيكون سماشد برجر","d":"قطعة لحم بقري سماشد مع جبنة سايحة صوص برجر و بيكون لحم بقري مدخن","new":false,"p":[109],"id":"1.5"},{"n":"إضافة دبل على البرجر أو سماشد","d":null,"new":false,"p":[69],"id":"1.6"},{"n":"بيف برجر pro","d":"قطعة برجر برو الجديد مع الجبنة التشيكي وصوص الرنجو الجديدة وبصل المكرمل والبيكون في عيش البريوش مع البطاطس وحلقات البصل ومشروب","new":true,"p":[139],"id":"1.7"},{"n":"فرايد تشيكن pro","d":null,"new":true,"p":[139],"id":"1.8"}]},{"t":"سندوتش فرايد تشيكن","s":["سنجل","دبل","تريل"],"n":null,"i":[{"n":"تشيكن بيج زون","d":"قطع الفرايد تشيكن مع التركي والسلامي المدخن وصوص الشيدر","new":false,"p":[85,117,173],"id":"2.0"},{"n":"تشيكن فلاي رانش","d":"قطع الفرايد تشيكن مع صوص الرانش","new":false,"p":[87,118,176],"id":"2.1"},{"n":"تشيز هالبينو فرايد تشيكن","d":"فرايد تشيكن مع هالبينو وصوص الشيدر و أصابع الموزاريلا","new":false,"p":[88,118,176],"id":"2.2"},{"n":"ميجا فرايد تشيكن","d":"فرايد تشيكن مع قطعة برجر لحم صافي وصوص الشيدر","new":false,"p":[null,126,181],"id":"2.3"},{"n":"بيكون فرايد تشيكن","d":"فرايد تشيكن مع بيف بيكون وصوص الشيدر وصوص بافلو","new":false,"p":[91,118,186],"id":"2.4"},{"n":"تشيكن بيج بوص","d":"فرايد تشيكن مع الخس وصوص الشيدر وصوص التستي","new":false,"p":[88,118,181],"id":"2.5"},{"n":"تشيكن بافلو رانش","d":"فرايد تشيكن مع الخس وصوص بافلو وصوص الرانش","new":false,"p":[95,118,176],"id":"2.6"},{"n":"تشيكن أبو عبيدة","d":null,"new":false,"p":[91,118,176],"id":"2.7"},{"n":"برج القاهرة","d":"ثلاث طبقات فرايد تشيكن مع أصابع موتزاريلا التركي والسلامي المدخن وصوص صلصة اللذيذ وصوص الشيدر والباربكيو","new":false,"p":[null,null,176],"id":"2.8"}]},{"t":"سندوتشات فراخ","s":[""],"n":"الحجم: كبير. جميع سندوتشات الفراخ مضاف إليها مايونيز والخس والخيار المخلل","i":[{"n":"تشيكن كرسبي حار","d":null,"new":false,"p":[79],"id":"3.0"},{"n":"تشيكن فاهيتا","d":null,"new":false,"p":[79],"id":"3.1"},{"n":"تشيكن راب","d":"خبز صلصة اللذيذ الملفوف مع الفراخ و جبنة الموزاريلا","new":false,"p":[79],"id":"3.2"},{"n":"تشيكن فارالي","d":"شرائح الفراخ المشوية مع الخضار المشوي والهوت دوج","new":false,"p":[79],"id":"3.3"},{"n":"شيش طاووق","d":null,"new":false,"p":[84],"id":"3.4"},{"n":"تشيكن هاواي","d":"شرائح الفراخ المشوية مع الخضار المشوي و التركي المدخن","new":false,"p":[81],"id":"3.5"},{"n":"تشيكن كرسبي إكسترا","d":"صدور الدجاج الكرسبي مع شيدر و الاسموك التركي والخس والمايونيز","new":false,"p":[79],"id":"3.6"},{"n":"تشيكن جريل","d":"صدور الفراخ المشوية مع الباربكيو والمايونيز","new":false,"p":[79],"id":"3.7"},{"n":"تشيكن بانيه","d":null,"new":false,"p":[79],"id":"3.8"},{"n":"بيج هوم برجر تشيكن","d":"قطعة برجر فراخ 50 جرام مع خس الخيار والمخلل و المايونيز والشيدر","new":false,"p":[79],"id":"3.9"},{"n":"اكسبلوجن","d":"صدور الفراخ المشوية مع المشروم المشوي وصوص الباربكيو في العيش الكرفي","new":true,"p":[83],"id":"3.10"},{"n":"شيش رانش","d":null,"new":true,"p":[91],"id":"3.11"}]},{"t":"اسبشيال صلصة","s":[""],"n":null,"i":[{"n":"فرايد تشيكن بيتزا","d":"صدور الفراخ الكريسبي مع صوص البيتزا وصوص الشيدر و سلامي والزيتون وجبن الموزريلا","new":false,"p":[137],"id":"4.0"},{"n":"بوكس الكريسبي","d":"3 قطع استريبس مع البطاطس وكول سلو","new":false,"p":[110],"id":"4.1"},{"n":"حواوشي وش بيتزا اسكندراني","d":null,"new":false,"p":[97],"id":"4.2"},{"n":"وجبة تندر صلصة","d":"مع صوص من إختيارك شيلي - بافلو - شيدر","new":false,"p":[155],"id":"4.3"},{"n":"طبق ميكس جريل","d":null,"new":false,"p":[165],"id":"4.4"}]},{"t":"كريب حادق","s":[""],"n":null,"i":[{"n":"تشيكن تربو رانش","d":"كرسبي مع التركي والسلامي المدخن وصوص الرانش وصوص الشيدر","new":true,"p":[103],"id":"5.0"},{"n":"كريب ولعها","d":"صدور الفراخ الكرسبي مع الهالبينو البيف بيكون وصوص بافلو","new":true,"p":[105],"id":"5.1"},{"n":"كريب بيف هيرو","d":"هوم ميد برجر مع البصل المشوي والمشروم وصوص بافلو","new":true,"p":[101],"id":"5.2"},{"n":"كريب شيكاجو","d":"قطع الكرسبي مع هوت دوج والموزاريلا ومكس صوص اللذيذ","new":true,"p":[103],"id":"5.3"},{"n":"كريب السفاح","d":"قطع فرايد اتشيكن مع اصابع الموزاريلا وتركي مدخن وصوص التيستي والباربكيو","new":true,"p":[104],"id":"5.4"},{"n":"سجق كيري","d":"سجق شرقي مع جبنة الكيري والموزاريلا","new":true,"p":[96],"id":"5.5"},{"n":"كريب T.T.C","d":"فراخ كرسبي مع تركي المدخن وصوص لندن اي والموزاريلا","new":true,"p":[102],"id":"5.6"},{"n":"كريب سماش","d":"قطعة سماش برجر مع البصل المكرمل وصوص التستي والموزاريلا","new":true,"p":[104],"id":"5.7"},{"n":"كريب كعبول","d":"كرسبي بالفاهينا و موتزاريلا صوص التروبكل الجديدة","new":true,"p":[107],"id":"5.8"},{"n":"كريب كركور","d":"بسطرمة مع كرسبي ومكس جبنة الكيري وموتزاريلا","new":true,"p":[107],"id":"5.9"},{"n":"كريب شيش طاووق","d":null,"new":false,"p":[93],"id":"5.10"},{"n":"كريب ميكس لحوم","d":"لحمة مفرومة مع السوسيس و كفتة و السجق الكاتشب و المايونيز و الموتزاريلا وصوص مخصوص","new":false,"p":[96],"id":"5.11"},{"n":"كريب ميكس فراخ","d":"استريبس مع فاهيتا فراخ و الناجتس و كتشب ومايونيز و موتزاريلا و صوص صلصة المختلف","new":false,"p":[96],"id":"5.12"},{"n":"فاهيتا فراخ","d":null,"new":false,"p":[93],"id":"5.13"},{"n":"كريب كفتة","d":null,"new":false,"p":[90],"id":"5.14"},{"n":"كريب كرسبي استريبس","d":null,"new":false,"p":[92],"id":"5.15"},{"n":"كريب جمبري","d":null,"new":false,"p":[148],"id":"5.16"},{"n":"كريب سوسيس","d":null,"new":false,"p":[83],"id":"5.17"},{"n":"كريب بسطرمة","d":null,"new":false,"p":[91],"id":"5.18"},{"n":"كريب مكسيكانو","d":"هوت دوج مع الخضار والمشروم والموزاريلا","new":false,"p":[86],"id":"5.19"},{"n":"كريب باربكيو","d":"فراخ مشوية مع المشروم وصوص الباربكيو","new":false,"p":[95],"id":"5.20"}]},{"t":"كريب حلو","s":[""],"n":null,"i":[{"n":"كريب شوكولاتة بندق","d":null,"new":false,"p":[47],"id":"6.0"},{"n":"كريب شوكولاتة وقشطة","d":null,"new":false,"p":[47],"id":"6.1"},{"n":"كريب شوكولاتة و بوريو","d":null,"new":false,"p":[47],"id":"6.2"},{"n":"كريب لوتس","d":null,"new":false,"p":[48],"id":"6.3"}]},{"t":"فطير حادق","s":[""],"n":null,"i":[{"n":"جبنة رومي","d":null,"new":false,"p":[128],"id":"7.0"},{"n":"ميكس تشيز","d":null,"new":false,"p":[130],"id":"7.1"},{"n":"لحمة - فراخ - تونة","d":null,"new":false,"p":[146],"id":"7.2"},{"n":"سوسيس","d":null,"new":false,"p":[141],"id":"7.3"},{"n":"سجق","d":null,"new":false,"p":[141],"id":"7.4"},{"n":"بسطرمة","d":null,"new":false,"p":[150],"id":"7.5"},{"n":"مشروم و جبنة","d":null,"new":false,"p":[129],"id":"7.6"},{"n":"صلصة","d":"لحمة مع فراخ والسوسيس وجبنة الموتزاريلا","new":false,"p":[150],"id":"7.7"},{"n":"فطيرة صاروخ صلصة","d":"جبنة ملفوفة بالحشو حسب الرغبة مع الموتزاريلا والزيتون","new":false,"p":[150],"id":"7.8"},{"n":"كرسبي رانش","d":"قطع الفراخ الكرسبي مع الخضار و صوص المختلف مع صوص الرانش","new":false,"p":[155],"id":"7.9"},{"n":"سجق كيري","d":"السجق الشرقي مع الكيري","new":true,"p":[155],"id":"7.10"},{"n":"الهلوطة","d":"فراخ كرسبي مع هوت دوج مع الشيدر والتستي صوص","new":true,"p":[157],"id":"7.11"},{"n":"الشقلوبة","d":"سجق شرقي مع البسطرمة و الكيري و الموتزاريلا","new":true,"p":[159],"id":"7.12"},{"n":"فطيرة الفريدو","d":"فراخ مشوية مع الخضار وصوص الفريدو وجبنة كريمي و موتزاريلا","new":true,"p":[165],"id":"7.13"},{"n":"فطيرة الهاليبو","d":"كرسبي مع هالبينو مع صوص الجبن والموزدريلاه مع صوص البافلو","new":true,"p":[165],"id":"7.14"},{"n":"فطيرة كولد كات","d":"سموكد تركي مع هوت دوج سلامي و مكس خضار و موتزاريلا جبنة رومي","new":false,"p":[157],"id":"7.15"},{"n":"إضافة لحوم أو جبن","d":null,"new":false,"p":[68],"id":"7.16"}]},{"t":"بيتزا","s":["وسط","كبير","شرقي"],"n":"يضاف للجميع موتزاريلا","i":[{"n":"مارجريتا","d":null,"new":false,"p":[87,132,null],"id":"8.0"},{"n":"خضروات","d":null,"new":false,"p":[92,135,null],"id":"8.1"},{"n":"ميكس تشيز","d":null,"new":false,"p":[94,135,137],"id":"8.2"},{"n":"لحمة","d":null,"new":false,"p":[100,145,135],"id":"8.3"},{"n":"سجق أو سوسيس","d":null,"new":false,"p":[96,148,137],"id":"8.4"},{"n":"بسطرمة","d":null,"new":false,"p":[98,144,146],"id":"8.5"},{"n":"فراخ","d":null,"new":false,"p":[98,150,148],"id":"8.6"},{"n":"تونة","d":null,"new":false,"p":[101,140,146],"id":"8.7"},{"n":"جمبري","d":null,"new":false,"p":[152,194,null],"id":"8.8"},{"n":"صلصة","d":null,"new":false,"p":[102,145,null],"id":"8.9"},{"n":"سوبر سوبريم","d":"اختيار لعشاق اللحوم من لحمة أو فراخ","new":false,"p":[99,146,null],"id":"8.10"},{"n":"ببروني","d":"ببروني مع المشروم وفلفل الالوان والموزاريلا","new":true,"p":[107,151,null],"id":"8.11"},{"n":"ديمون اسموكي","d":"قطع الفراخ المدخنة مع بيف بيكون والخضار الفريش مع صوص التستي و الموزاريلا","new":true,"p":[111,154,null],"id":"8.12"},{"n":"تشكن لافا رانش","d":"قطع الفراخ الكرسبي مع صوص صلصة اللذيذ وصوص الرانش","new":true,"p":[104,152,null],"id":"8.13"},{"n":"بيج بيف","d":"صوص البيتزا المختلف مع البيف توبينج المدخن وشرائح الشيدر مع الموزاريلا وصوص ثاوزند ايلاند","new":true,"p":[105,152,null],"id":"8.14"},{"n":"بيتزا فاير","d":"فراخ وبيروني + هالبينو وخضار وصوص البافلو الحار وموتزاريلا","new":true,"p":[109,157,null],"id":"8.15"},{"n":"هولا هولا باربكيو","d":"صوص صلصة مع الفراخ المشوية والباربكيو والموزاريلا","new":false,"p":[100,143,142],"id":"8.16"},{"n":"بيتزا 2×2","d":"كل نص بطعم مختلف من إختيارك","new":false,"p":[110,159,null],"id":"8.17"},{"n":"تشكن رانش","d":"فراخ صلصة اللذيذة مع الموزاريلا و صوص الرانش","new":false,"p":[105,152,154],"id":"8.18"},{"n":"بيتزا توسكانا","d":null,"new":false,"p":[112,160,null],"id":"8.19"},{"n":"إضافات لحوم أو جبن","d":null,"new":false,"p":[45,62,null],"id":"8.20"},{"n":"حشو أطراف جبنة أو سوسيس","d":null,"new":false,"p":[49,66,null],"id":"8.21"}]},{"t":"مكرونات","s":["كبير","جامبو"],"n":null,"i":[{"n":"مكرونة بشاميل لحمة","d":null,"new":false,"p":[65,79],"id":"9.0"},{"n":"نجرسكو","d":"مكرونة قلم مع الفراخ و الصوص الأبيض","new":false,"p":[65,80],"id":"9.1"},{"n":"ماك اند تشيز كلاسيك","d":"مكرونة هلالية مطبوخة مع التشيدر و الجبنة الموزاريلا","new":false,"p":[null,82],"id":"9.2"},{"n":"ماك اند تشيز لحمة أو فراخ","d":null,"new":false,"p":[null,96],"id":"9.3"},{"n":"مكرونة هيرو رانش","d":null,"new":false,"p":[null,10],"id":"9.4"},{"n":"بنا بافلو هاوس","d":"مكرونة بنا مع بينك صوص غرقان موتزاريلا وقطع الكرسبي وبافلو صوص","new":false,"p":[null,104],"id":"9.5"},{"n":"إضافات جبن أو لحوم أو مشروم","d":null,"new":false,"p":[26,35],"id":"9.6"}]},{"t":"بيتزا برجر","s":[""],"n":null,"i":[{"n":"بيتزا برجر","d":"بيف أو تشيكن","new":false,"p":[95],"id":"10.0"},{"n":"ميجا بيتزا برجر","d":"قطعة بيف مع قطعة فراخ كرسبي مع التركي المدخن وصوص شيدر","new":false,"p":[111],"id":"10.1"},{"n":"بيكون بيتزا برجر","d":"قطعة لحمة أو فراخ مع صوص البافلو وصوص الشيدر","new":false,"p":[114],"id":"10.2"},{"n":"هالبينو رانش بيتزا برجر","d":"قطع الفراخ الكرسبي مع الهالبينو وصوص الرانش","new":false,"p":[111],"id":"10.3"},{"n":"زون بيتزا برجر","d":"قطع الفراخ الكرسبي مع سلامي والتركي المدخن وصوص الشيدر","new":false,"p":[109],"id":"10.4"},{"n":"بيتزا برجر بيج بوص","d":"قطع الفراخ الكرسبي مع الخس و صوص الشيدر وصوص التستي","new":false,"p":[109],"id":"10.5"},{"n":"سماشد بيتزا برجر","d":"قطعة لحم بقري سماشد مع صوص الشيدر والبصل المكرمل","new":false,"p":[116],"id":"10.6"},{"n":"بافلو رانش بيتزا برجر","d":"قطع الفراخ الكرسبي مع الخس وصوص بافلو وصوص الرانش","new":false,"p":[109],"id":"10.7"},{"n":"بيف بيتزا برو","d":"برجر برو مع الجبنة التشيكي وصوص صلصة الهوت مديم وبصل مكرمل والبيكون في ميني بيتزا مع البطاطس وصوابع الموتزاريلا و مشروب","new":true,"p":[161],"id":"10.8"},{"n":"شيكن بيتزا برو","d":"صدور الدجاج المقرمش مع صوص الجبن وصوص صلصة الهوت مديم وبصل مكرمل وبيكون في ميني بيتزا المش مع البطاطس وصوابع الموتزاريلا و مشروب","new":true,"p":[161],"id":"10.9"}]},{"t":"الفتة","s":[""],"n":null,"i":[{"n":"فتة كريسبي","d":"رز بسمتي + صوص من اختيارك + ستريبس + علبة كولسلو","new":false,"p":[85],"id":"11.0"}]},{"t":"إضافات","s":[""],"n":null,"i":[{"n":"بطاطس شيدر","d":null,"new":false,"p":[56],"id":"12.0"},{"n":"بطاطس موزاريلا","d":null,"new":false,"p":[45],"id":"12.1"},{"n":"بطاطس هالبينو سلامي","d":null,"new":false,"p":[55],"id":"12.2"},{"n":"بطاطس بيف بيكون","d":null,"new":false,"p":[70],"id":"12.3"},{"n":"بطاطس بوم فريت","d":null,"new":false,"p":[25],"id":"12.4"},{"n":"بطاطس لغاويص","d":"بطاطس فراخ كرسبي و صوص رانش وصوص شيدر","new":false,"p":[80],"id":"12.5"},{"n":"موزاريلا ستيك ثلاث قطع","d":null,"new":false,"p":[45],"id":"12.6"},{"n":"مخلل - كول سلو","d":null,"new":false,"p":[17],"id":"12.7"},{"n":"تكساس شيلي فرايز","d":"بطاطس مع صوصات وهوت دوج","new":true,"p":[65],"id":"12.8"},{"n":"اللؤة سماش","d":null,"new":true,"p":[95],"id":"12.9"},{"n":"اللؤة فراخ","d":null,"new":true,"p":[95],"id":"12.10"},{"n":"ريبكلل صوص","d":"رانش - شيدر - كاتشب - باربكيو - تكساس - بافلو - تومية - سويت شيلي - مايونيز - الف جزيرة - هوت صوص","new":false,"p":[16],"id":"12.11"}]}]},{"id":"demo1","name":"مطعم تجريبي ١","sub":"مثال لشكل مطعم ثانٍ"},{"id":"demo2","name":"مطعم تجريبي ٢","sub":"مثال لشكل مطعم ثالث"}];
+var $=function(i){return document.getElementById(i)};
+function dig(s){return String(s||'').replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace(/[۰-۹]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)}).replace(/\D/g,'')}
+function normPhone(s){var d=dig(s);if(d.indexOf('0020')==0)d=d.slice(4);else if(d.indexOf('20')==0&&d.length>=12)d=d.slice(2);if(d.length==10&&d[0]=='1')d='0'+d;return d}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function money(n){return n+' جنيه'}
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
+var R={};RESTS.forEach(function(r){R[r.id]=r;r.by={};(r.menu||[]).forEach(function(c){c.i.forEach(function(x){r.by[x.id]={c:c,x:x}})})});
+var cur=null,sel={},editId=null,orders=[],tab=1,loadedFor='';
+function api(method,body,qs){
+ var u=API+(qs?('?'+qs):'');
+ var o=method=='POST'?{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}:{};
+ return fetch(u,o).then(function(r){return r.json()});
+}
+function phone(){return normPhone($('ph').value)}
+function ident(){ls('rest.nm',$('nm').value);ls('rest.ph',$('ph').value)}
+/* ---------- views ---------- */
+function show(v){['home','rest','orders'].forEach(function(x){$('v-'+x).classList.toggle('hide',x!=v)});$('bar').classList.toggle('hide',v!='rest')}
+function head(t,p,back){$('hd').innerHTML=(back?'<span class="back" id="bk">‹ '+esc(back)+'</span><br>':'')+'<h1>'+esc(t)+'</h1>'+(p?'<p>'+esc(p)+'</p>':'');if(back)$('bk').onclick=function(){go(back=='المطاعم'?'home':'orders')}}
+function go(v,rid){
+ if(v=='home'){show('home');head('المطاعم','اختر مطعمًا أو ابحث عن صنف');drawList();window.scrollTo(0,0);if(location.hash)history.replaceState(null,'',location.pathname)}
+ else if(v=='orders'){ident();show('orders');head('طلباتي',($('nm').value.trim()||'')+(phone()?' · '+phone():''),'المطاعم');loadOrders(true);window.scrollTo(0,0)}
+ else if(v=='rest'){openRest(rid)}
+}
+/* ---------- home list + search ---------- */
+function hl(t,q){t=String(t);if(!q)return esc(t);var i=t.toLowerCase().indexOf(q);if(i<0)return esc(t);return esc(t.slice(0,i))+'<mark>'+esc(t.slice(i,i+q.length))+'</mark>'+esc(t.slice(i+q.length))}
+function drawList(){
+ var q=$('rq').value.trim().toLowerCase(),h='',n=0;
+ RESTS.forEach(function(r){
+  var nameHit=q&&r.name.toLowerCase().indexOf(q)>-1,items=[];
+  if(q&&r.menu)r.menu.forEach(function(c){c.i.forEach(function(x){if((x.n+' '+(x.d||'')).toLowerCase().indexOf(q)>-1)items.push({x:x,c:c})})});
+  if(q&&!nameHit&&!items.length)return;
+  n++;
+  var soon=!r.menu;
+  h+='<div class="card'+(q&&items.length?'':'')+'"><div class="rc'+(soon?' soon':'')+'" '+(soon?'':'data-r="'+r.id+'"')+'><div class="ic'+(soon?' b':'')+'">'+esc(r.name.charAt(0))+'</div><div><h3>'+hl(r.name,q&&nameHit?q:'')+'</h3><p>'+esc(r.sub)+'</p></div><span class="tag'+(soon?' o':'')+'">'+(soon?'قريبًا':r.count+' صنفًا')+'</span></div>';
+  if(q&&items.length){h+='<div style="margin-top:8px">';items.slice(0,6).forEach(function(m){var p=m.x.p.filter(function(z){return z!=null});h+='<div class="hi" data-r="'+r.id+'"><span>'+hl(m.x.n,q)+'</span><span>'+(p.length?p[0]+(p.length>1?'+':''):'—')+'</span></div>'});if(items.length>6)h+='<div class="hit">و'+(items.length-6)+' أصناف أخرى</div>';h+='</div>'}
+  h+='</div>';
+ });
+ if(q)h='<div class="hit">'+(n?n+' من المطاعم':'لا توجد نتائج')+' لـ "'+esc($('rq').value.trim())+'"</div>'+h;
+ else h+='';
+ $('rl').innerHTML=h;
+}
+$('rq').addEventListener('input',drawList);
+$('rl').addEventListener('click',function(e){var t=e.target.closest('[data-r]');if(t){ident();go('rest',t.dataset.r)}});
+/* ---------- restaurant menu ---------- */
+function render(r){
+ var h='';
+ r.menu.forEach(function(c,ci){
+  h+='<details class="cat"><summary><span>'+esc(c.t)+'<span class="cnt" id="cc'+ci+'"></span></span></summary>';
+  if(c.n)h+='<div class="cnote">'+esc(c.n)+'</div>';
+  c.i.forEach(function(x){
+   h+='<div class="it" data-s="'+esc((x.n+' '+(x.d||'')+' '+c.t).toLowerCase())+'"><div class="nm">'+esc(x.n)+(x.new?'<span class="new">جديد</span>':'')+'</div>';
+   if(x.d)h+='<div class="ds">'+esc(x.d)+'</div>';
+   h+='<div class="vs">';
+   x.p.forEach(function(p,vi){
+    var lab=c.s[vi];
+    if(p==null){h+='<div class="v off">'+(lab?esc(lab)+' ':'')+'—</div>';return}
+    h+='<div class="v" data-k="'+x.id+'|'+vi+'" role="button" tabindex="0">'+(lab?'<span>'+esc(lab)+'</span>':'')+'<b>'+p+'</b><span class="q"><span data-d="-1">−</span><em>1</em><span data-d="1">+</span></span></div>';
+   });
+   h+='</div></div>';
+  });
+  h+='</details>';
+ });
+ $('menu').innerHTML=h;
+}
+function line(k){var r=R[cur],a=k.split('|'),m=r.by[a[0]];if(!m)return null;var p=m.x.p[+a[1]];if(p==null)return null;var lab=m.c.s[+a[1]];return{k:k,name:m.x.n+(lab?' ('+lab+')':''),cat:m.c.t,p:p,q:sel[k]}}
+function lines(){return Object.keys(sel).map(line).filter(Boolean)}
+function pendingOf(rid){return orders.filter(function(o){return o.restaurant==R[rid].name&&o.status=='قيد الطلب'})[0]}
+function refresh(){
+ if(!cur)return;
+ var L=lines(),t=0,n=0;L.forEach(function(l){t+=l.p*l.q;n+=l.q});
+ $('tot').textContent=money(t);
+ $('cnt').textContent=n?('عدد الأصناف: '+n):'لم تختر شيئًا';
+ var pend=!editId&&pendingOf(cur);
+ $('gob').disabled=!n||!!pend;
+ $('gob').textContent=editId?'حفظ التعديل':'أرسل الطلب';
+ document.querySelectorAll('.v[data-k]').forEach(function(e){var q=sel[e.dataset.k]||0;e.classList.toggle('on',q>0);var em=e.querySelector('em');if(em)em.textContent=q||1});
+ var cc={};L.forEach(function(l){var ci=l.k.split('|')[0].split('.')[0];cc[ci]=(cc[ci]||0)+l.q});
+ R[cur].menu.forEach(function(c,ci){var e=$('cc'+ci);if(e){e.textContent=cc[ci]||'';e.classList.toggle('on',!!cc[ci])}});
+ var eb=$('editb');
+ if(editId){eb.className='card';eb.innerHTML='<b>تعديل طلب قيد الطلب</b><div class="btns"><button class="sec" id="ce">إلغاء التعديل</button></div>';$('ce').onclick=function(){editId=null;sel={};$('os').value='';saveSel();refresh()}}
+ else if(pend){eb.className='card';eb.innerHTML='<div class="warn" style="margin:0">لديك طلب قيد الطلب من '+esc(R[cur].name)+'. أكّد استلامه أو عدّله أو ألغه قبل طلب جديد من نفس المطعم.</div><div class="btns"><button class="main" id="gp">افتح طلباتي</button></div>';$('gp').onclick=function(){go('orders')}}
+ else eb.className='card hide';
+ saveSel();
+}
+function saveSel(){ls('rest.sel.'+cur,JSON.stringify({sel:sel,os:$('os').value,edit:editId}))}
+function status(msg,err){var s=$('st');s.textContent=msg||'';s.className='status'+(msg?' show':'')+(err?' err':'')}
+function openRest(rid){
+ cur=rid;var r=R[rid];sel={};editId=null;$('os').value='';$('q').value='';
+ try{var s=JSON.parse(ls('rest.sel.'+rid)||'null');if(s){sel=s.sel||{};$('os').value=s.os||'';editId=s.edit||null}}catch(e){}
+ Object.keys(sel).forEach(function(k){if(!line(k))delete sel[k]});
+ render(r);show('rest');head(r.name,r.sub,'المطاعم');status('');
+ if(phone().length>=10)loadOrders(false).then(function(){refresh()});
+ refresh();window.scrollTo(0,0);
+ if(history.replaceState)history.replaceState(null,'','#'+rid);
+}
+document.addEventListener('click',function(ev){
+ var v=ev.target.closest('.v[data-k]');if(!v)return;
+ var k=v.dataset.k,d=ev.target.closest('[data-d]');
+ if(d){var q=(sel[k]||0)+(+d.dataset.d);if(q<=0)delete sel[k];else sel[k]=Math.min(q,50)}
+ else{if(sel[k])delete sel[k];else sel[k]=1}
+ refresh();
+});
+$('q').addEventListener('input',function(){
+ var t=this.value.trim().toLowerCase();
+ document.querySelectorAll('.cat').forEach(function(c){
+  var any=false;c.querySelectorAll('.it').forEach(function(i){var m=!t||i.dataset.s.indexOf(t)>-1;i.style.display=m?'':'none';if(m)any=true});
+  c.style.display=any?'':'none';if(t&&any)c.open=true;
+ });
+});
+$('os').addEventListener('input',function(){saveSel()});
+$('nm').addEventListener('input',ident);$('ph').addEventListener('input',ident);
+/* ---------- send ---------- */
+$('gob').addEventListener('click',function(){
+ var name=$('nm').value.trim(),ph=phone(),L=lines();
+ if(!name||ph.length<10||ph.length>13){status(!name?'اكتب اسمك في الصفحة الرئيسية.':'اكتب رقم موبايل صحيحًا في الصفحة الرئيسية.',true);var b=$('bk');window.scrollTo(0,0);return}
+ if(!L.length)return;
+ var total=0;L.forEach(function(l){total+=l.p*l.q});
+ var payload={a:'save',id:editId||'',restaurant:R[cur].name,name:name,phone:ph,total:total,note:$('os').value.trim(),items:L.map(function(l){return{k:l.k,q:l.q,n:l.name,c:l.cat,p:l.p}})};
+ var b=$('gob'),was=editId;b.disabled=true;b.textContent='جارٍ الحفظ...';
+ api('POST',payload).then(function(r){
+  if(!r||!r.ok){if(r&&r.error=='pending')throw new Error('pending');throw new Error('fail')}
+  var rid=cur;sel={};$('os').value='';editId=null;ls('rest.sel.'+rid,null);
+  $('sh').innerHTML='<h3>'+(was?'تم تحديث طلبك':'تم حفظ طلبك')+'</h3><div style="color:var(--muted)">'+esc(R[rid].name)+' · حالته قيد الطلب</div><div class="note">بعد ما يصلك الطلب افتح "طلباتي" واضغط "تم استلام الطلب" لينتقل إلى طلباتك القديمة.</div><div class="btns"><button class="main" id="gor">طلباتي</button></div>';
+  $('md').classList.add('show');$('gor').onclick=function(){$('md').classList.remove('show');go('orders')};
+ }).catch(function(e){
+  status(e.message=='pending'?'لديك طلب قيد الطلب من هذا المطعم. أكّد استلامه أو ألغه أولًا.':'لم يتم الحفظ. تحقق من الاتصال وأعد المحاولة.',true);window.scrollTo(0,0);
+  loadOrders(false).then(refresh);refresh();
+ });
+});
+$('md').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});
+/* ---------- orders ---------- */
+function loadOrders(draw){
+ var p=phone();
+ if(p.length<10){orders=[];if(draw)drawOrders();return Promise.resolve()}
+ if(draw)ost('جارٍ تحميل طلباتك...');
+ return api('GET',null,'a=get&phone='+encodeURIComponent(p)).then(function(r){
+  if(!r||!r.ok)throw 0;orders=r.orders||[];loadedFor=p;if(draw){ost('');drawOrders()}updTag();
+ }).catch(function(){if(draw)ost('تعذر الاتصال. حاول مرة أخرى.',true)});
+}
+function ost(m,err){var s=$('ost');s.textContent=m||'';s.className='status'+(m?' show':'')+(err?' err':'')}
+function updTag(){var n=orders.filter(function(o){return o.status=='قيد الطلب'}).length;$('myot').textContent=n?n+' قيد الطلب':'';$('myot').className='tag'+(n?' o':'');$('myot').style.display=n?'':'none'}
+function ordHTML(o){
+ var t=0,h='<div class="card ord"><div class="t"><span>'+esc(o.restaurant)+'</span><span class="tag'+(o.status=='قيد الطلب'?' o':(o.status=='ملغي'?' x':''))+'">'+esc(o.status)+(o.status=='تم الاستلام'?' ✓':'')+'</span></div><div class="d">'+esc(o.created)+(o.closed?' · '+esc(o.closedLabel||'')+' '+esc(o.closed):'')+'</div><div style="margin-top:6px">';
+ (o.items||[]).forEach(function(l){t+=l.p*l.q;h+='<div class="ln"><span>'+esc(l.n)+(l.q>1?' × '+l.q:'')+'</span><b>'+money(l.p*l.q)+'</b></div>'});
+ h+='<div class="tot"><span>الإجمالي</span><span>'+money(o.total!=null?o.total:t)+'</span></div>';
+ if(o.note)h+='<div class="note" style="white-space:pre-wrap">Open Space: '+esc(o.note)+'</div>';
+ h+='</div>';
+ if(o.status=='قيد الطلب')h+='<div class="btns"><button class="main" data-act="rcv" data-id="'+esc(o.id)+'">✓ تم استلام الطلب</button><button class="sec" data-act="edit" data-id="'+esc(o.id)+'">تعديل</button><button class="dng" data-act="cancel" data-id="'+esc(o.id)+'">إلغاء الطلب</button></div>';
+ return h+'</div>';
+}
+function drawOrders(){
+ $('tb1').className=tab==1?'on':'';$('tb2').className=tab==2?'on':'';
+ var P=orders.filter(function(o){return o.status=='قيد الطلب'}),D=orders.filter(function(o){return o.status!='قيد الطلب'});
+ var h='';
+ if(phone().length<10)h='<div class="warn">اكتب رقم موبايلك في الصفحة الرئيسية لتظهر طلباتك.</div>';
+ else if(tab==1){
+  h+=P.length?P.map(ordHTML).join(''):'<div class="empty">لا يوجد طلب قيد الطلب</div>';
+  h+='<div class="warn">يمكنك الطلب من أي مطعم في أي وقت، حتى في نفس اليوم. الطلب قيد الطلب لا يُستبدل إلا بعد تأكيد استلامه أو تعديلك له.</div><div class="btns"><button class="main" onclick="go(\'home\')">＋ ابدأ طلبًا جديدًا من مطعم</button></div>';
+ }else h+=D.length?D.map(ordHTML).join(''):'<div class="empty">لا توجد طلبات قديمة بعد. تظهر هنا بعد تأكيد استلامها.</div>';
+ $('ol').innerHTML=h;
+}
+$('tb1').onclick=function(){tab=1;drawOrders()};$('tb2').onclick=function(){tab=2;drawOrders()};
+$('ol').addEventListener('click',function(e){
+ var b=e.target.closest('[data-act]');if(!b||b.disabled)return;
+ var id=b.dataset.id,act=b.dataset.act,o=orders.filter(function(x){return x.id==id})[0];if(!o)return;
+ if(act=='edit'){
+  var rid=Object.keys(R).filter(function(k){return R[k].name==o.restaurant})[0];if(!rid)return;
+  sel={};(o.items||[]).forEach(function(i){sel[i.k]=i.q});
+  ls('rest.sel.'+rid,JSON.stringify({sel:sel,os:o.note||'',edit:o.id}));go('rest',rid);return;
+ }
+ if(act=='cancel'&&!confirm('إلغاء هذا الطلب؟'))return;
+ b.disabled=true;
+ api('POST',{a:act=='rcv'?'receive':'cancel',id:id,phone:phone()}).then(function(r){
+  if(!r||!r.ok)throw 0;return loadOrders(true);
+ }).then(function(){if(act=='rcv'){tab=2;drawOrders();ost('تم تأكيد الاستلام. انتقل الطلب إلى طلباتك القديمة.')}else ost('تم إلغاء الطلب.')}).catch(function(){b.disabled=false;ost('لم يتم التنفيذ. حاول مرة أخرى.',true)});
+});
+/* ---------- boot ---------- */
+$('nm').value=ls('rest.nm')||ls('salsa.nm')||'';$('ph').value=ls('rest.ph')||ls('salsa.ph')||'';
+var start=OPEN||(location.hash||'').slice(1);
+if(start&&R[start]&&R[start].menu)openRest(start);else go('home');
+if(phone().length>=10)loadOrders(false).then(function(){updTag();if(cur)refresh()});
+</script>
+</body>
+</html>
