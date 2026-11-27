@@ -124,7 +124,7 @@ function refresh(){
  document.querySelectorAll('.v[data-k]').forEach(function(e){var q=sel[e.dataset.k]||0;e.classList.toggle('on',q>0);var em=e.querySelector('em');if(em)em.textContent=q||1});
  var cc={};L.forEach(function(l){var ci=l.k.split('|')[0].split('.')[0];cc[ci]=(cc[ci]||0)+l.q});
  MENU.forEach(function(c,ci){var e=$('cc'+ci);e.textContent=cc[ci]||'';e.classList.toggle('on',!!cc[ci])});
- try{localStorage.setItem('salsa.sel',JSON.stringify(sel));localStorage.setItem('salsa.nm',$('nm').value);localStorage.setItem('salsa.ph',$('ph').value);localStorage.setItem('salsa.os',$('os').value);localStorage.setItem('salsa.saved',saved?'1':'')}catch(e){}
+ try{localStorage.setItem('salsa.sel',JSON.stringify(sel));localStorage.setItem('salsa.nm',$('nm').value);localStorage.setItem('salsa.ph',$('ph').value);localStorage.setItem('salsa.os',$('os').value);localStorage.setItem('salsa.saved',saved?'1':'');localStorage.setItem('salsa.day',dayKey())}catch(e){}
 }
 function status(msg,err){var s=$('st');s.textContent=msg||'';s.className='status'+(msg?' show':'')+(err?' err':'')}
 document.addEventListener('click',function(ev){
@@ -147,6 +147,7 @@ function api(method,body,qs){
  var o=method=='POST'?{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)}:{};
  return fetch(u,o).then(function(r){return r.json()});
 }
+function dayKey(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
 var lastLook='';
 function lookup(){
  var p=normPhone($('ph').value);
@@ -191,6 +192,7 @@ $('go').addEventListener('click',function(){
 $('md').addEventListener('click',function(e){if(e.target===this)this.classList.remove('show')});
 render();
 try{
+ if(localStorage.getItem('salsa.day')!==dayKey()){localStorage.removeItem('salsa.sel');localStorage.removeItem('salsa.os');localStorage.removeItem('salsa.saved')}
  var s=JSON.parse(localStorage.getItem('salsa.sel')||'{}');Object.keys(s).forEach(function(k){if(line(k)&&(sel[k]=s[k],true)){}});
  $('nm').value=localStorage.getItem('salsa.nm')||'';$('ph').value=localStorage.getItem('salsa.ph')||'';$('os').value=localStorage.getItem('salsa.os')||'';saved=!!localStorage.getItem('salsa.saved');
 }catch(e){}
